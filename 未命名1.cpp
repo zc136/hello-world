@@ -1,43 +1,47 @@
+//创建一个整形数组，完成对应数组的操作
+//1.实现函数init（）初始化数组权威0
+//2.实现print()打印数组的每个元素
+//3.实现reverse()函数完成数组的逆方向放置
 #include <stdio.h>
+void Init(int arr[],int sz)
+{
+	int i=0;
+	for(i=0;i<sz;i++)
+	{
+		arr[i]=0;
+	}
+}
+void Print(int arr[],int sz)
+{
+	int i=0;
+	for(i=0;i<sz;i++)
+	{
+		printf("%d ",arr[i]);
+	
+		
+	}
+}
 
-int Facl(int n)
+void Reverse(int arr[],int sz)
 {
-	int i = 0;
-	int ret = 1;
-	for (i = 1; i <= n; i++)
+	int left=0;
+	int right=sz-1;
+	while(left<right)
 	{
-		ret = ret * i;
+		int tmp=arr[left];
+		arr[left]=arr[right];
+		arr[right]=tmp;
+		left++;
+		right--;
 	}
-	return ret;
 }
 int main()
 {
-	int n = 0;
-	int ret = 0;
-	scanf("%d\n", &n);
-	ret = Facl(n);
-	printf("%d\n", ret);
-	return 0;
-}
- 
-/*#include <stdio.h>
-#include<math.h>
-int Facl(int n)
-{
-	int i = 0;
-	int ret = 1;
-	for (i = 1; i <= n; i++)
-	{
-		ret = ret * i;
-	}
-	return ret;
-}
-int main()
-{
-	int n = 0;
-	int ret = 0;
-	scanf("%d\n", &n);
-	ret = Facl(n);
-	printf("ret=%d\n", ret);
-	return 0;
-}//
+	int arr[10]={1,2,3,4,5,6,7,8,9};
+	int sz=sizeof(arr)/sizeof(arr[0]);
+//Init(arr,sz);
+Print(arr,sz);
+Reverse(arr,sz);
+Print(arr,sz);	
+		return 0;
+ } 
