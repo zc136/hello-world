@@ -1,65 +1,23 @@
-#include<reg51.h>
-sbit D1=P2^0;
-sbit D2=P2^1;
-sbit D3=P2^2;
-sbit D4=P2^3;
-sbit D5=P2^4;
-sbit D6=P2^5;
-sbit D7=P2^6;
-sbit D8=P2^7;
-unsigned char Countor1;
-unsigned char Countor2;
-unsigned char Countor3;
-unsigned char Countor4;
-
+#include<reg51.h> 
+void delay60ms(void)
+{
+ unsigned char m,n;
+ for(m=0;m<100;m++)
+   for(n=0;n<200;n++)
+        ;
+}
 void main(void)
-{
-EA=1;
-ET0=1;
-TMOD=0x01;
-TH0=(65536-46083)/256;
-TL0=(65536-46083)%256;
-TR0=1;
-Countor1=0;
-Countor2=0;
-Countor3=0;
-Countor4=0;
-
-while(1)
-;
+{  
+  unsigned char i;
+  unsigned char code Tab[ ]={0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f,0x7f,0xbf,0xdf,0xef,0xf7,0xfb,0xfd,0xfe};  
+  while(1)
+  {
+	 for(i=0;i<16;i++)
+      {
+        P0=Tab[i];
+        delay60ms();
+         P1=Tab[i];
+       delay60ms();
+	   }
+	} 
 }
-void Time0(void)interrupt 1 using 0
-{
-Countor1++;
-Countor2++;
-Countor3++;
-Countor4++;
-if(Countor1==20)
-{
-D1=~D1;
-D5=~D5;
-Countor1=0;
-}
-if(Countor2==40)
-{
-D2=~D2;
-D6=~D6;
-Countor2=0;
-}
-if(Countor3==60)
-{
-D3=~D3;
-D7=~D7;
-Countor3=0;
-}
-if(Countor4==80)
-{
-D4=~D4;
-D8=~D8;
-Countor4=0;
-}
-TH0=(65536-46083)/256;
-TL0=(65536-46083)%256;
-}
-
-
