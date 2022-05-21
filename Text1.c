@@ -1,39 +1,34 @@
 #include<reg51.h>
+unsigned char code Tab[]={0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f};
+void Send(unsigned char dat)
+{
+SBUF=dat;
+while(TI==0)
+;
+TI=0;
+}
 void delay(void)
 {
-unsigned char i,j;
-for(i=0;i<20;i++)
-for(j=0;j<20;j++)
+unsigned char m,n;
+for(m=0;m<200;m++)
+for(n=0;n<250;n++)
 ;
 }
 void main(void)
 {
+unsigned char i;
+TMOD=0x20;
+SCON=0x40;
+PCON=0x00;
+TH1=0xfd;
+TL1=0xfd;
+TR1=1;
 while(1)
 {
-P2=0x01;
-P0=0xc0;
+for(i=0;i<8;i++)
+{
+Send(Tab[i]);
 delay();
-P2=0x02;
-P0=0x92;
-delay();
-P2=0x04;
-P0=0xb0;
-delay();
-P2=0x08;
-P0=0x99;
-delay();
-P2=0x10;
-P0=0xc0;
-delay();
-P2=0x20;
-P0=0xf9;
-delay();
-P2=0x40;
-P0=0xb0;
-delay();
-P2=0x80;
-P0=0xa4;
-delay();
-//P2=0xff;
+}
 }
 }
