@@ -1,53 +1,23 @@
-#include<reg51.h>
-unsigned char ID;
-sbit S1=P1^4;
-void delay(void)
+#include<reg51.h> 
+void delay60ms(void)
 {
-unsigned char i,j;
-for(i=0;i<200;i++)
-for(j=0;j<100;j++)
-;
+ unsigned char m,n;
+ for(m=0;m<100;m++)
+   for(n=0;n<200;n++)
+        ;
 }
 void main(void)
-{
-TMOD=0x20;
-EA=1;
-ET1=1;
-TR1=1;
-TH1=256-200;
-TL1=256-200;
-ID=0;
-while(1)
-{
-switch(ID)
-{
-case 0:
-P3=0xfe;
-break;
-case 1:
-P3=0xfd;
-break;
-case 2:
-P3=0xfb;
-break;
-case 3:
-P3=0xf7;
-break;
+{  
+  unsigned char i;
+  unsigned char code Tab[ ]={0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f,0x7f,0xbf,0xdf,0xef,0xf7,0xfb,0xfd,0xfe};  
+  while(1)
+  {
+	 for(i=0;i<16;i++)
+      {
+        P0=Tab[i];
+        delay60ms();
+         P1=Tab[i];
+       delay60ms();
+	   }
+	} 
 }
-}
-}
-void intersev(void) interrupt 3 using 1
-{
-TR1=0;
-P1=0xff;
-if(S1==0)
-{
-delay();
-if(S1==0)
-ID=ID+1;
-}
-if(ID==4)
-ID=0;
-TR1=1;
-}
-
