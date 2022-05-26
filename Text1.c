@@ -1,110 +1,103 @@
 #include<reg51.h>
-sbit S1=P1^4;
-sbit S2=P1^5;
-sbit S3=P1^6;
-sbit S4=P1^7;
+sbit P14=P1^4;
+sbit P15=P1^5;
+sbit P16=P1^6;
+sbit P17=P1^7;
+sbit sound=P3^7;
 unsigned char keyval;
-void led_delay(void)
+void delay(void)
 {
-unsigned char i,j;
-for(i=0;i<250;i++)
-for(j=0;j<250;j++)
-;
+    unsigned char i;
+        for(i=0;i<200;i++)
+          ;
 }
 void delay20ms(void)
 {
-unsigned char i,j;
-for(i=0;i<100;i++)
-for(j=0;j<60;j++)
-;
-}
-void forward(void)
-{
-P3=0xfe;
-led_delay();
-P3=0xfd;
-led_delay();
-P3=0xfb;
-led_delay();
-P3=0xf7;
-led_delay();
-P3=0xef;
-led_delay();
-P3=0xdf;
-led_delay();
-P3=0xdf;
-led_delay();
-P3=0x7f;
-led_delay();
-P3=0xfe;
-led_delay();
-}
-void backward(void)
-{
-P3=0x7f;
-led_delay();
-P3=0xbf;
-led_delay();
-P3=0xdf;
-led_delay();
-P3=0xef;
-led_delay();
-P3=0xf7;
-led_delay();
-P3=0xfb;
-led_delay();
-P3=0xfd;
-led_delay();
-P3=0xfe;
-led_delay();
-}
-void stop(void)
-{
-P3=0xff;
-}
-void flash(void)
-{
-P3=0xff;
-led_delay();
-P3=0x00;
-led_delay();
-}
-void key_scan(void)
-{
-if((P1&0xf0)!=0xf0)
-{
-delay20ms();
-if(S1==0)
-keyval=1;
-if(S2==0)
-keyval=2;
-if(S3==0)
-keyval=3;
-if(S4==0)
-keyval=4;
-}
+    unsigned char i,j;
+       for(i=0;i<100;i++)
+       for(j=0;j<60;j++)
+          ;
 }
 void main(void)
 {
-keyval=0;
-while(1)
+    unsigned char D[]={3,4,0,1,3,2,9};
+    EA=1;
+        ET0=1;
+        TMOD=0x01;
+        TH0=(65536-500)/256;
+        TL0=(65536-500)%256;
+        TR0=1;
+        keyval=0xff;
+        while(keyval!=D[0])
+          ;
+        while(keyval!=D[1])
+          ;
+        while(keyval!=D[2])
+          ;
+        while(keyval!=D[3])
+          ;
+        while(keyval!=D[4])
+          ;
+        while(keyval!=D[5])
+          ;
+        while(keyval!=D[6])
+          ;
+        P3=0xfe;
+}
+void time0_interserve(void)interrupt 1 using 1
 {
-key_scan();
-switch(keyval)
-{
-case 1:forward();
-break;
-case 2:backward();
-break;
-case 3:stop();
-break;
-case 4:flash();
-break;
+    unsigned char i;
+    TR0=0;
+    P1=0xf0;
+        if((P1&0xf0)!=0xf0)
+            delay20ms();
+        if((P1&0xf0)!=0xf0)
+        {
+        P1=0xfe;
+          if(P14==0)
+            keyval=1;
+          if(P15==0)
+            keyval=2;
+          if(P16==0)
+            keyval=3;
+          if(P17==0)
+            keyval=4;
+        P1=0xfd;
+          if(P14==0)
+            keyval=5;
+          if(P15==0)
+            keyval=6;
+          if(P16==0)
+            keyval=0;
+          if(P17==0)
+            keyval=8;
+        P1=0xfb;
+          if(P14==0)
+            keyval=9;
+          if(P15==0)
+            keyval=10;
+          if(P16==0)
+            keyval=11;
+          if(P17==0)
+            keyval=12;
+        P1=0xf7;
+          if(P14==0)
+            keyval=13;
+          if(P15==0)
+            keyval=14;
+          if(P16==0)
+            keyval=15;
+          if(P17==0)
+            keyval=16;
+for(i=0;i<200;i++)
+  {
+    sound=0;
+    delay();
+          sound=1;
+          delay();
 }
 }
+TR0=1;
+TH0=(65536-500)/256;
+TL0=(65536-500)%256;
 }
-
-
-
-
-
