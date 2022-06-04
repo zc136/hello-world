@@ -1,39 +1,24 @@
 #include<reg51.h>
-void delay(void)
+unsigned char Receive(void)
 {
-unsigned char i,j;
-for(i=0;i<20;i++)
-for(j=0;j<20;j++)
+unsigned char dat;
+while(RI==0)
 ;
+RI=0;
+dat=SBUF;
+return dat;
 }
 void main(void)
 {
+TMOD=0x20;
+SCON=0x50;
+PCON=0x00;
+TH1=0xfd;
+TL1=0xfd;
+TR1=1;
+REN=1;
 while(1)
 {
-P2=0x01;
-P0=0xc0;
-delay();
-P2=0x02;
-P0=0x92;
-delay();
-P2=0x04;
-P0=0xb0;
-delay();
-P2=0x08;
-P0=0x99;
-delay();
-P2=0x10;
-P0=0xc0;
-delay();
-P2=0x20;
-P0=0xf9;
-delay();
-P2=0x40;
-P0=0xb0;
-delay();
-P2=0x80;
-P0=0xa4;
-delay();
-//P2=0xff;
+P1=Receive();
 }
 }
