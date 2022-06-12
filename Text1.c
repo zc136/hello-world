@@ -1,65 +1,43 @@
 #include<reg51.h>
-sbit D1=P2^0;
-sbit D2=P2^1;
-sbit D3=P2^2;
-sbit D4=P2^3;
-sbit D5=P2^4;
-sbit D6=P2^5;
-sbit D7=P2^6;
-sbit D8=P2^7;
-unsigned char Countor1;
-unsigned char Countor2;
-unsigned char Countor3;
-unsigned char Countor4;
-
+sbit sound=P3^7;
+unsigned int time=0;
 void main(void)
 {
-EA=1;
-ET0=1;
-TMOD=0x01;
-TH0=(65536-46083)/256;
-TL0=(65536-46083)%256;
-TR0=1;
-Countor1=0;
-Countor2=0;
-Countor3=0;
-Countor4=0;
-
+ TOMD=0x10;
+TH1=(65536-921)/256;
+TL1=(65536-921)%256;
+TR1=1;
+int
 while(1)
-;
-}
-void Time0(void)interrupt 1 using 0
 {
-Countor1++;
-Countor2++;
-Countor3++;
-Countor4++;
-if(Countor1==20)
-{
-D1=~D1;
-D5=~D5;
-Countor1=0;
+while(TF1==0)
+    ;
+ TF1=0;
+time++;
+if(time<1000)
+sound=~sound;
+if(time==1000)
+sound=0;
+if((time>=2500)&&(time<3000))
+sound=~sound;
+if(time==3000)
+sound=0;
+if((time>=3500)&&(time<4000))
+sound=~sound;
+if(time==4000)
+sound=0;  ;
+if((time>=4500)&&(time<5500))
+ sound=~sound;
+if(time==5500)
+sound=0;
+if(time==10500)
+time=0;
+TH1=(65536-921)/256;
+TL1=(65536-921)%256;
 }
-if(Countor2==40)
-{
-D2=~D2;
-D6=~D6;
-Countor2=0;
 }
-if(Countor3==60)
-{
-D3=~D3;
-D7=~D7;
-Countor3=0;
-}
-if(Countor4==80)
-{
-D4=~D4;
-D8=~D8;
-Countor4=0;
-}
-TH0=(65536-46083)/256;
-TL0=(65536-46083)%256;
-}
+
+
+
 
 
