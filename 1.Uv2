@@ -3,7 +3,10 @@
 
 Target (Target 1), 0x0000 // Tools: 'MCS-51'
 
+Group (Source Group 1)
 
+File 1,2,<C:\Users\13627\Desktop\µ¥Æ¬»úÑµÁ·\Á·Ï°3\STARTUP.A51><STARTUP.A51> 0x0 
+File 1,1,<.\Text1.c><Text1.c> 0x0 
 
 
 Options 1,0,0  // Target 'Target 1'
