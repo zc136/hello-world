@@ -1,4 +1,4 @@
-//猜数字游戏
+//猜数字游戏1-100
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
